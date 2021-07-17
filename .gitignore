@@ -5,3 +5,4 @@ state-node-alonzo-*
 wallet
 **/tx
 exercise_3/datum.txt
+.DS_Store
