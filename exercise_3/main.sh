@@ -119,8 +119,8 @@ show_help() {
   echo ""
   echo "Operations:"
   echo "  fund-collateral AMOUNT         send AMOUNT to collateral wallet"
-  echo "  lock AMOUNT                    lock AMOUNT of funds into the script"
-  echo "  redeem                         redeem funds from the script"
+  echo "  lock-funds AMOUNT              lock AMOUNT of funds into the script"
+  echo "  redeem-funds                   redeem funds from the script"
   echo "  clean-tx-log                   remove previous unsubmitted transactions"
 }
 
