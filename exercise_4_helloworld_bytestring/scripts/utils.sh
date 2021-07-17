@@ -12,7 +12,7 @@ get_tx_expiry_slot() {
 
   current_slot=$(cardano-cli query tip --testnet-magic 5 | jq '.slot')
 
-  tx_expiry_slot=$(($current_slot + "$1"))
+  tx_expiry_slot=$(($current_slot + $1))
 }
 
 # ======================================================================
