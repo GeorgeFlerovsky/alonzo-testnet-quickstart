@@ -24,7 +24,7 @@ fi
 
 git checkout tags/alonzo-purple-1.0.1
 
-nix-build -A scripts.alonzo-purple.node -o ../bin/cardano-node-alonzo-purple
+nix-build -A scripts.alonzo-qa.node -o ../bin/cardano-node-alonzo-qa
 nix-build -A cardano-cli -o ../bin/cardano-cli
 
 cd ..
