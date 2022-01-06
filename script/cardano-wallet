@@ -32,6 +32,10 @@ validate_script_file() {
 }
 
 main() {
+  script_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
+  source "${script_dir}/lib/utils.sh"
+  source "${script_dir}/lib/send.sh"
+
   wallet_dir="$NODE_HOME/wallet/$wallet_id"
 
   case $operation in
@@ -207,6 +211,18 @@ main() {
 
       echo -n $wallet_verification_key_file
       ;;
+    send)
+      wallet_id=$sender
+      validate_wallet_id
+      validate_wallet_dir
+      wallet_id=$receiver
+      validate_wallet_id
+      validate_wallet_dir
+      wallet_id=$sender
+
+      send \
+        && submit
+      ;;
     *)
       echoerr "Programming error: operation '$operation' not implemented."
       exit 9
@@ -297,6 +313,15 @@ handle_args() {
       wallet_id="$1"
       shift
       ;;
+    send)
+      sender="$1"
+      shift
+      receiver="$1"
+      shift
+      echo "Remaining args $@"
+      amount_to_send="$1"
+      shift
+      ;;
     *)
       # If no operation provided, then default to 'address'
       if [[ "$#" -eq 0 ]]; then
@@ -328,16 +353,18 @@ show_help() {
   echo "  -y, --yes                      do not ask for confirmation of destructive operations"
   echo ""
   echo "Operations (default = address):"
-  echo "  address WALLET_ID              get the address for the wallet called WALLET_ID"
-  echo "  address-script SCRIPT_FILE     get the address for a script located at SCRIPT_FILE"
-  echo "  balance WALLET_ID              get the balance for the wallet called WALLET_ID"
-  echo "  balance-script SCRIPT_FILE     get the balance for a script located at SCRIPT_FILE"
-  echo "  utxos WALLET_ID                get the UTxOs for the wallet called WALLET_ID"
-  echo "  utxos-script SCRIPT_FILE       get the UTxOs for a script located at SCRIPT_FILE"
-  echo "  create WALLET_ID               create a wallet called WALLET_ID"
-  echo "  remove WALLET_ID               remove the wallet called WALLET_ID"
-  echo "  signing-key WALLET_ID          get the signing key for the wallet called WALLET_ID"
-  echo "  verification-key WALLET_ID     get the verification key for the wallet called WALLET_ID"
+  echo "  address WALLET_ID                  get the address for the wallet called WALLET_ID"
+  echo "  address-script SCRIPT_FILE         get the address for a script located at SCRIPT_FILE"
+  echo "  balance WALLET_ID                  get the balance for the wallet called WALLET_ID"
+  echo "  balance-script SCRIPT_FILE         get the balance for a script located at SCRIPT_FILE"
+  echo "  utxos WALLET_ID                    get the UTxOs for the wallet called WALLET_ID"
+  echo "  utxos-script SCRIPT_FILE           get the UTxOs for a script located at SCRIPT_FILE"
+  echo "  create WALLET_ID                   create a wallet called WALLET_ID"
+  echo "  remove WALLET_ID                   remove the wallet called WALLET_ID"
+  echo "  signing-key WALLET_ID              get the signing key for the wallet called WALLET_ID"
+  echo "  verification-key WALLET_ID         get the verification key for the wallet called WALLET_ID"
+  echo "  send WALLET_ID_SENDER  WALLET_ID_RECEIVER AMOUNT"
+  echo "                                     send from WALLET_ID_SENDER to WALLET_ID_RECEIVER the AMOUNT"
 }
 
 echoerr (){
