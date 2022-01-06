@@ -44,7 +44,7 @@ prepare_for_plutus_script() {
 
   min_execution_cost=$(jq -n -r \
     --argjson fixed_cost $fixed_cost \
-    --argjson prices "$(cardano-cli query protocol-parameters --testnet-magic 8 | jq '.executionUnitPrices')" \
+    --argjson prices "$(cardano-cli query protocol-parameters --testnet-magic ${TESTNET_MAGIC} | jq '.executionUnitPrices')" \
     --argjson budget "$min_execution_units" \
     '{"Steps": (($prices.priceSteps.numerator / $prices.priceSteps.denominator) * $budget.Steps), "Memory": (($prices.priceMemory.numerator / $prices.priceMemory.denominator) * $budget.Memory)} | add')
 
@@ -64,7 +64,7 @@ prepare_for_plutus_script() {
 
   # ===================================
   # Required collateral
-  collateral_percentage=$(cardano-cli query protocol-parameters --testnet-magic 8 | jq -r '.collateralPercentage')
+  collateral_percentage=$(cardano-cli query protocol-parameters --testnet-magic ${TESTNET_MAGIC} | jq -r '.collateralPercentage')
   collateral_value_required=$(($scaled_redemption_cost * $collateral_percentage / 100))
   echo Collateral Percentage Required: $collateral_percentage%
   echo Collateral Value Required: $collateral_value_required

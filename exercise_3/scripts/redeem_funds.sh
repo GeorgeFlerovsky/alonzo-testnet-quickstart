@@ -111,7 +111,7 @@ redeem_funds() {
 
   cp $datum_file $tx_file.datum
 
-  cardano-cli query protocol-parameters --testnet-magic 8 --out-file $tx_file.params
+  cardano-cli query protocol-parameters --testnet-magic ${TESTNET_MAGIC} --out-file $tx_file.params
 
   cardano-cli transaction build-raw --alonzo-era \
     --out-file $tx_file.unsigned \
@@ -128,7 +128,7 @@ redeem_funds() {
     --tx-out $tx_out_change
 
   if [ -f $tx_file.unsigned ]; then
-    cardano-cli transaction sign --testnet-magic 8 \
+    cardano-cli transaction sign --testnet-magic ${TESTNET_MAGIC} \
       --out-file $tx_file.signed \
       --tx-body-file $tx_file.unsigned \
       --signing-key-file $tx_in_main_signing_key \

@@ -11,14 +11,14 @@ This project has been developed/tested on a Linux system, and it requires the fo
 
 Clone this repository and enter the resulting directory.
 
-Take a look at the `.envrc` file to see what environment variables and path it sets up. Enable direnv: 
+Take a look at the `.envrc` file to see what environment variables and path it sets up. Enable direnv:
 ```
 [user@machine alonzo-testnet]$ direnv allow
 ```
 
 Ensure that you have the IOG binary caches for nix setup:
 ```
-[user@machine alonzo-testnet]$ cat /etc/nix/nix.conf 
+[user@machine alonzo-testnet]$ cat /etc/nix/nix.conf
 substituters        = https://hydra.iohk.io https://iohk.cachix.org https://cache.nixos.org/
 trusted-public-keys = hydra.iohk.io:f/Ea+s+dFdN+3Y/G+FDgSq+a5NEWhJGzdjvKNGv0/EQ= iohk.cachix.org-1:DpRUyj7h7V830dp/i6Nti+NEO2/nhblbov/8MW7Rqoo= cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 ```
@@ -31,7 +31,7 @@ Install cardano-node and cardano-cli (using nix):
 ## Run and monitor a passive cardano node
 Start cardano node:
 ```
-[user@machine alonzo-testnet]$ cd $NODE_HOME && cardano-node-alonzo-white &> node.log
+[user@machine alonzo-testnet]$ cd $NODE_HOME && cardano-node-${NODE_VERSION_TAG} &> node.log
 ```
 
 Open another terminal tab to monitor the node. For example, if you have the [lnav](https://lnav.org/) utility installed:

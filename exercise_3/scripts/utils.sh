@@ -10,7 +10,7 @@ get_tx_expiry_slot() {
     exit 1
   fi
 
-  current_slot=$(cardano-cli query tip --testnet-magic 8 | jq '.slot')
+  current_slot=$(cardano-cli query tip --testnet-magic ${TESTNET_MAGIC} | jq '.slot')
 
   tx_expiry_slot=$(($current_slot + $1))
 }
@@ -48,7 +48,7 @@ submit() {
     echo ""
     if [[ $approve_submit =~ ^[Yy]$ ]]; then
       touch $tx_file.submitted
-      cardano-cli transaction submit --testnet-magic 8 --tx-file $tx_file.signed
+      cardano-cli transaction submit --testnet-magic ${TESTNET_MAGIC} --tx-file $tx_file.signed
     fi
   fi
 }

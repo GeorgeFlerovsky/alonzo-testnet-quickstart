@@ -1,7 +1,7 @@
 .cardano-node
 bin
 node.log
-state-node-alonzo-*
+state-node-*
 wallet
 **/tx
 exercise_3/datum.txt

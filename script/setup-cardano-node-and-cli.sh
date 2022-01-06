@@ -22,9 +22,9 @@ else
   git pull
 fi
 
-git checkout tags/alonzo-purple-1.0.1
+git checkout tags/1.29.0
 
-nix-build -A scripts.alonzo-purple.node -o ../bin/cardano-node-alonzo-purple
+nix-build -A scripts.${NODE_VERSION_TAG}.node -o ../bin/cardano-node-${NODE_VERSION_TAG}
 nix-build -A cardano-cli -o ../bin/cardano-cli
 
 cd ..
